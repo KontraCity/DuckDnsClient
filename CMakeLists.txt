@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-### --- Executable configuration --- ### 
+### --- Executable configuration --- ###
 add_executable(DuckDnsClient
     "source/client.cpp"
     "source/config.cpp"

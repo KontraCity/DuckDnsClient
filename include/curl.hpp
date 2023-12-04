@@ -20,7 +20,7 @@ namespace Curl
         std::string data;
         long code = -1;
     };
-    
+
     /// @brief Perform HTTP GET request
     /// @param url Request URL
     /// @throw std::runtime_error if internal error occurs

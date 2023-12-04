@@ -7,6 +7,5 @@ then
     exit
 fi
 
-# Signal Duck DNS client to try to force update DDNS
 sudo kill -s SIGUSR1 $pid
 echo "Sent DDNS force update signal to process $pid."

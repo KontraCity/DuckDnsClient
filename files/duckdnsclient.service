@@ -1,5 +1,5 @@
 [Unit]
-Description=Duck DNS update client
+Description=Duck DNS client
 After=multi-user.target
 
 [Service]

@@ -2,10 +2,6 @@
 #include <iostream>
 #include <memory>
 
-// Library spdlog
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
-
 // Custom modules
 #include "config.hpp"
 #include "client.hpp"
@@ -39,7 +35,7 @@ int main(int parameterCount, char** parameterValue)
                 std::cerr << fmt::format("Couldn't open configuration file \"{0}\"! Are you root?\n", ConfigConst::ConfigFilePath);
                 return 1;
             }
-            
+
             std::cout << fmt::format(
                 "Generated default configuration file \"{0}\".\n"
                 "Go ahead and fill created fields.\n",
@@ -52,7 +48,7 @@ int main(int parameterCount, char** parameterValue)
             std::cout << "Unknown option: " << parameter << '\n';
         }
     }
-    
+
     std::shared_ptr<Config> config;
     try
     {

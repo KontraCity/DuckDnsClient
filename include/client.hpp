@@ -28,11 +28,11 @@ private:
     std::mutex m_mutex;
     std::condition_variable m_cv;
     std::shared_ptr<Config> m_config;
-    
+
 public:
     // Singleton instance
     static std::unique_ptr<Client> Instance;
-    
+
 private:
     /// @brief Get amount of seconds till next hour
     /// @return Amount of seconds till next hour
@@ -41,7 +41,7 @@ private:
     /// @brief Signal handler
     /// @param signal Signal to handle
     static void SignalHandler(int signal);
-    
+
 private:
     /// @brief Initialize Duck DNS client
     Client();

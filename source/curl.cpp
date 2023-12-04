@@ -45,7 +45,7 @@ Curl::Response Curl::Get(const std::string& url)
     {
         if (result == CURLE_COULDNT_RESOLVE_HOST || result == CURLE_COULDNT_CONNECT)
             throw std::invalid_argument("kc::Curl::Get(): Couldn't resolve host: internet connection appears to be absent");
-        
+
         throw std::runtime_error(fmt::format(
             "kc::Curl::Get(): Couldn't perform request: curl_easy_perform() returned {0}",
             static_cast<int>(result)
