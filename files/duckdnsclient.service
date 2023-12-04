@@ -1,0 +1,14 @@
+[Unit]
+Description=Duck DNS update client
+After=multi-user.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/local/bin/DuckDnsClient
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
