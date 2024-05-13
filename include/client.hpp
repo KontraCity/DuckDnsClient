@@ -12,9 +12,6 @@
 // Library {fmt}
 #include <fmt/format.h>
 
-// Library spdlog
-#include <spdlog/spdlog.h>
-
 // Custom modules
 #include "config.hpp"
 #include "curl.hpp"

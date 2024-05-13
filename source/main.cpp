@@ -169,7 +169,7 @@ int main(int argc, char** argv)
         return 1;
 
     fmt::print(
-        "Welcome to Duck DNS client\n"
+        "Welcome to Duck DNS Client 1.1\n"
         "GitHub repository: https://github.com/KontraCity/DuckDnsClient\n"
     );
 
@@ -183,5 +183,6 @@ int main(int argc, char** argv)
     {
         logger.critical("Exception: \"{}\"", error.what());
         logger.critical("Client is terminating");
+        return -1;
     }
 }

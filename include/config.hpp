@@ -3,8 +3,8 @@
 // STL modules
 #include <string>
 #include <vector>
-#include <fstream>
 #include <sstream>
+#include <fstream>
 #include <stdexcept>
 
 // Library {fmt}
@@ -34,10 +34,10 @@ public:
     using Pointer = std::shared_ptr<Config>;
 
     // Configuration file read/parse error
-    class Error : public std::invalid_argument
+    class Error : public std::logic_error
     {
     public:
-        using invalid_argument::invalid_argument;
+        using logic_error::logic_error;
     };
 
 private:
