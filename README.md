@@ -1,7 +1,6 @@
 # DuckDNS Client
 DuckDnsClient is a lightweight executable made to update [DuckDNS](https://www.duckdns.org/) DDNS hostnames.
 It tries to update DDNS automatically and accepts force update requests.
-Right now only Linux is supported.
 
 ### Dependencies
 * [libfmt](https://github.com/fmtlib/fmt)
@@ -9,10 +8,6 @@ Right now only Linux is supported.
 * [libspdlog](https://github.com/gabime/spdlog)
 
 ### Compilation
-```
-$ ./build.sh
-```
-OR
 ```
 $ mkdir build && cd build
 $ cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -23,7 +18,7 @@ $ make -j
 It's up to you how you install the client.
 It needs to run continuously and to have configuration file `/etc/duckdnsclient.conf`.
 For example, `DuckDnsClient` can be put in `/usr/local/bin` and `systemctl` service `/etc/systemd/system/duckdnsclient.service` can be created.
-Don't forget to generate configuration file with `./DuckDnsClient --generate-config`.
+Don't forget to generate configuration file with `./DuckDnsClient --generate`.
 
 ## DDNS update methods
 ### Automatic update
@@ -43,7 +38,7 @@ Client's configuration file is `/etc/duckdnsclient.conf`.
 Update token and hosts are configured there.
 Can be created using:
 ```
-$ ./DuckDnsClient --generate-config
+$ ./DuckDnsClient --generate
 ```
 
 ## Example files
