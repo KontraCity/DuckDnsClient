@@ -25,6 +25,7 @@ namespace kc {
 class Client
 {
 private:
+    spdlog::logger m_logger;
     std::mutex m_mutex;
     std::condition_variable m_cv;
     std::shared_ptr<Config> m_config;
@@ -47,7 +48,7 @@ private:
     Client();
 
     /// @brief Try to update DDNS
-    /// @throw std::runtime_error if internal error occured
+    /// @throw std::runtime_error if internal error occures
     /// @return New IP if updated successfully, empty string if IP didn't change
     std::string UpdateDdns();
 

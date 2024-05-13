@@ -1,11 +1,11 @@
-### --- Initial configuration --- ###
+## --- Project configuration --- ##
 cmake_minimum_required(VERSION 3.10)
 project(DuckDnsClient VERSION 1.1)
 
-# Set CXX version
+## -- Compiler configuration -- ##
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
+include_directories("include/")
 
 ### --- Executable configuration --- ###
 add_executable(DuckDnsClient
@@ -15,16 +15,8 @@ add_executable(DuckDnsClient
     "source/main.cpp"
     "source/utility.cpp"
 )
-target_include_directories(DuckDnsClient PRIVATE "include/")
-
-
-### --- Libraries configuration --- ###
 target_link_libraries(DuckDnsClient
     "fmt"
     "curl"
     "pthread"
 )
-
-# Library spdlog
-find_package(spdlog REQUIRED)
-target_link_libraries(DuckDnsClient spdlog::spdlog)

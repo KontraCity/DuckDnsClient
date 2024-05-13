@@ -6,8 +6,8 @@ std::unique_ptr<Client> Client::Instance(new Client);
 
 std::time_t Client::SecondsTillNextHour()
 {
-    constexpr std::time_t secondsInHour = (60 * 60);
-    constexpr std::time_t secondsInDay = (secondsInHour * 24);
+    constexpr std::time_t secondsInHour = 60 * 60;
+    constexpr std::time_t secondsInDay = secondsInHour * 24;
 
     std::time_t epochSeconds = std::time(nullptr);
     std::time_t daySeconds = epochSeconds - (epochSeconds / secondsInDay * secondsInDay);
@@ -22,6 +22,7 @@ void Client::SignalHandler(int signal)
 }
 
 Client::Client()
+    : m_logger(Utility::CreateLogger("client"))
 {
     // Bind signal handler to handle SIGUSR1 signal
     std::signal(SIGUSR1, SignalHandler);
@@ -43,7 +44,7 @@ std::string Client::UpdateDdns()
             if (!retried)
             {
                 retried = true;
-                spdlog::warn("Couldn't access Duck DNS API: no internet connection. Retrying...");
+                m_logger.warn("Couldn't access Duck DNS API: no internet connection. Retrying...");
             }
 
             Utility::Sleep(60);
@@ -52,27 +53,27 @@ std::string Client::UpdateDdns()
     if (apiResponse.code != 200)
     {
         throw std::runtime_error(fmt::format(
-            "kc::Daemon::UpdateDdns(): Couldn't update DDNS: API request failed: {0}, \"{1}\"",
+            "kc::Client::UpdateDdns(): Couldn't update DDNS: API request failed: {}, \"{}\"",
             apiResponse.code,
             apiResponse.data
         ));
     }
 
     if (retried)
-        spdlog::info("Successfully accessed Duck DNS API: internet connection restored.");
+        m_logger.info("Successfully accessed Duck DNS API: internet connection restored");
 
     std::smatch matches;
     if (!std::regex_search(apiResponse.data, matches, std::regex(R"((\w+)\n([\d\.]+)\n\n(\w+))")))
     {
         throw std::runtime_error(fmt::format(
-            "kc::Daemon::UpdateDdns(): Couldn't parse API response: response is \"{0}\"",
+            "kc::Client::UpdateDdns(): Couldn't parse API response: response is \"{}\"",
             apiResponse.data
         ));
     }
     if (matches.str(1) != "OK")
     {
         throw std::runtime_error(fmt::format(
-            "kc::Daemon::UpdateDdns(): Couldn't update DDNS: API response status is \"{0}\"",
+            "kc::Client::UpdateDdns(): Couldn't update DDNS: API response status is \"{}\"",
             matches.str(1)
         ));
     }
@@ -88,7 +89,7 @@ void Client::clientLoop(const std::shared_ptr<Config>& config)
     {
         std::string updatedIp = UpdateDdns();
         if (!updatedIp.empty())
-            spdlog::info("Initially updated DDNS to \"{0}\".", updatedIp);
+            m_logger.info("Initially updated DDNS to \"{}\"", updatedIp);
     }
 
     while (true)
@@ -100,14 +101,14 @@ void Client::clientLoop(const std::shared_ptr<Config>& config)
         if (force)
         {
             if (!updatedIp.empty())
-                spdlog::info("Forcefully updated DDNS to \"{0}\".", updatedIp);
+                m_logger.info("Forcefully updated DDNS to \"{}\"", updatedIp);
             else
-                spdlog::info("Tried to forcefully update DDNS, but IP didn't change.");
+                m_logger.info("Tried to forcefully update DDNS, but IP didn't change");
             continue;
         }
 
         if (!updatedIp.empty())
-            spdlog::info("Updated DDNS to \"{0}\".", updatedIp);
+            m_logger.info("Updated DDNS to \"{}\"", updatedIp);
     }
 }
 

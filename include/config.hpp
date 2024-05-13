@@ -14,8 +14,8 @@ namespace kc {
 
 namespace ConfigConst
 {
-    // Configuration file path
-    constexpr const char* ConfigFilePath = "/etc/duckdnsclient.conf";
+    // Client configuration file path
+    constexpr const char* ConfigFile = "/etc/duckdnsclient.conf";
 
     namespace Tags
     {
@@ -30,6 +30,10 @@ namespace ConfigConst
 class Config
 {
 public:
+    // Shared config instance pointer
+    using Pointer = std::shared_ptr<Config>;
+
+    // Configuration file read/parse error
     class Error : public std::invalid_argument
     {
     public:
@@ -42,13 +46,13 @@ private:
     std::string m_url;
 
 public:
-    /// @brief Generate default configuration file
-    /// @throw std::runtime_error if internal error occurs
-    static void GenerateDefaultFile();
+    /// @brief Generate sample configuration file for user to fill out
+    /// @throw std::runtime_error if file couldn't be created
+    static void GenerateSampleFile();
 
 public:
-    /// @brief Parse config file
-    /// @throw Config::Error if config parsing error occurs
+    /// @brief Read and parse configuration file
+    /// @throw Config::Error if reading/parsing error occurs
     Config();
 
     /// @brief Get DDNS update domains

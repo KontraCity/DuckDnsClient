@@ -1,19 +1,13 @@
 #include "config.hpp"
+using namespace kc::ConfigConst;
 
 namespace kc {
 
-void Config::GenerateDefaultFile()
+void Config::GenerateSampleFile()
 {
-    using namespace ConfigConst;
-    
-    std::ofstream configFile(ConfigFilePath, std::ios::trunc);
+    std::ofstream configFile(ConfigFile, std::ios::trunc);
     if (!configFile)
-    {
-        throw std::runtime_error(fmt::format(
-            "kc::Config::GenerateDefaultFile(): Couldn't open configuration file \"{0}\"",
-            ConfigFilePath
-        ));
-    }
+        throw std::runtime_error("kc::Config::GenerateSampleFile(): Couldn't create sample configuration file");
     
     configFile << fmt::format(
         "#############################################\n"
@@ -27,13 +21,13 @@ void Config::GenerateDefaultFile()
         "## Domain(s) to update\n"
         "## Duck DNS client will update this/these domain(s).\n"
         "# Should be one or more space separated strings.\n"
-        "{0} my-domain\n"
+        "{} my-domain\n"
         "\n"
         
         "## Update token\n"
         "## Duck DNS client will use this token to update domain(s).\n"
         "# Should be a string.\n"
-        "{1} xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\n",
+        "{} xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\n",
         
         Tags::Domains,
         Tags::Token
@@ -42,11 +36,9 @@ void Config::GenerateDefaultFile()
 
 Config::Config()
 {
-    using namespace ConfigConst;
-    
-    std::ifstream configFile(ConfigFilePath);
+    std::ifstream configFile(ConfigFile);
     if (!configFile)
-        throw Error("Couldn't open configuration file");
+        throw Error(fmt::format("Couldn't open configuration file \"{}\"", ConfigFile));
     
     while (!configFile.eof())
     {
@@ -70,20 +62,20 @@ Config::Config()
             lineStream >> newValue;
         }
         if (values.empty())
-            throw Error(fmt::format("\"{0}\": No value found", tag));
+            throw Error(fmt::format("\"{}\": No value found", tag));
 
         if (tag == Tags::Domains)
             m_domains = values;
         else if (tag == Tags::Token)
             m_token = values[0];
         else
-            throw Error(fmt::format("\"{0}\": Tag is unknown", tag));
+            throw Error(fmt::format("\"{}\": Tag is unknown", tag));
     }
     
     if (m_domains.empty())
-        throw Error(fmt::format("\"{0}\": Tag is absent in configuration file", Tags::Domains));
+        throw Error(fmt::format("\"{}\": Tag is absent in configuration file", Tags::Domains));
     if (m_token.empty())
-        throw Error(fmt::format("\"{0}\": Tag is absent in configuration file", Tags::Token));
+        throw Error(fmt::format("\"{}\": Tag is absent in configuration file", Tags::Token));
     
     std::string domains;
     for (int index = 0, size = m_domains.size(); index < size; ++index)
@@ -92,7 +84,7 @@ Config::Config()
         if (index != size - 1)
             domains += ',';
     }
-    m_url = fmt::format("https://www.duckdns.org/update?domains={0}&token={1}&verbose=true", domains, m_token);
+    m_url = fmt::format("https://www.duckdns.org/update?domains={}&token={}&verbose=true", domains, m_token);
 }
 
 } // namespace kc
