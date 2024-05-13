@@ -1,2 +1,6 @@
-# Build directory
+# Visual Studio files
+.vs/
+
+# Build directories
 build/
+out/
