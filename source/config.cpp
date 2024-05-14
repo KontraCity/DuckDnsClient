@@ -21,16 +21,16 @@ void Config::GenerateSampleFile()
         "## Domain(s) to update\n"
         "## Duck DNS client will update this/these domain(s).\n"
         "# Should be one or more space separated strings.\n"
-        "{} my-domain\n"
+        "{} {}\n"
         "\n"
         
         "## Update token\n"
         "## Duck DNS client will use this token to update domain(s).\n"
         "# Should be a string.\n"
-        "{} xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\n",
+        "{} {}\n",
         
-        Tags::Domains,
-        Tags::Token
+        Tags::Domains, Defaults::Domains,
+        Tags::Token, Defaults::Token
     );
 }
 

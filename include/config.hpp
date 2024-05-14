@@ -19,11 +19,14 @@ namespace ConfigConst
 
     namespace Tags
     {
-        // Represents one or more domains to update
         constexpr const char* Domains = "Domains";
-
-        // Represents domain update token
         constexpr const char* Token = "Token";
+    }
+
+    namespace Defaults
+    {
+        constexpr const char* Domains = "my-domain";
+        constexpr const char* Token = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
     }
 }
 

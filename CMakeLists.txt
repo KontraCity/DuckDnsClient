@@ -7,7 +7,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 include_directories("include/")
 
-### --- Executable configuration --- ###
+## --- Packages configuration --- ##
+find_package(fmt CONFIG REQUIRED)
+find_package(CURL REQUIRED)
+
+## --- Executable configuration --- ##
 add_executable(DuckDnsClient
     "source/client.cpp"
     "source/config.cpp"
@@ -16,7 +20,7 @@ add_executable(DuckDnsClient
     "source/utility.cpp"
 )
 target_link_libraries(DuckDnsClient
-    "fmt"
-    "curl"
+    fmt::fmt
+    CURL::libcurl
     "pthread"
 )

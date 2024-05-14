@@ -125,7 +125,7 @@ static int GenerateFiles()
 
     fmt::print(
         "Configuration file \"{}\" was created.\n"
-        "Please configure the client before starting it.\n",
+        "Please configure the file before starting DuckDnsClient.\n",
         ConfigConst::ConfigFile
     );
     return 0;
